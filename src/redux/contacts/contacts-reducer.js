@@ -1,21 +1,62 @@
-import { createReducer, combineReducers } from '@reduxjs/toolkit';
-import * as actions from './contacts-actions';
+// import { createReducer, combineReducers } from '@reduxjs/toolkit';
+// import * as actions from './contacts-actions';
+// import {
+//   getAllContacts,
+//   addNewContact,
+//   deleteContactById,
+//   editContactById,
+// } from 'redux/contacts/contacts-operations';
 
-const itemsInitialState = [];
+// const contactsReducer = createReducer([], {
+//   [getAllContacts.fulfilled]: (_, { payload }) => payload,
+//   [addNewContact.fulfilled]: (state, { payload }) => [payload, ...state],
+//   [deleteContactById.fulfilled]: (state, { payload }) =>
+//     state.filter(({ id }) => id !== payload.id),
+//   [editContactById.fulfilled]: (state, { payload }) =>
+//     state.map(contact => {
+//       return contact.id === payload.id ? payload : contact;
+//     }),
+// });
 
-const itemsReducer = createReducer(itemsInitialState, {
-  [actions.addContact]: (state, { payload }) => [...state, payload],
-  [actions.deleteContact]: (state, { payload }) =>
-    state.filter(({ id }) => id !== payload),
-});
+// const isLoading = createReducer(false, {
+//   [getAllContacts.pending]: () => true,
+//   [getAllContacts.fulfilled]: () => false,
+//   [getAllContacts.rejected]: () => false,
+//   [addNewContact.pending]: () => true,
+//   [addNewContact.fulfilled]: () => false,
+//   [addNewContact.rejected]: () => false,
+//   [deleteContactById.pending]: () => true,
+//   [deleteContactById.fulfilled]: () => false,
+//   [deleteContactById.rejected]: () => false,
+//   [editContactById.pending]: () => true,
+//   [editContactById.fulfilled]: () => false,
+//   [editContactById.rejected]: () => false,
+// });
 
-const filterReducer = createReducer('', {
-  [actions.filterContacts]: (_, { payload }) => payload,
-});
+// const error = createReducer(null, {
+//   [getAllContacts.pending]: () => null,
+//   [getAllContacts.rejected]: (_, { payload }) => payload,
+//   [addNewContact.pending]: () => null,
+//   [addNewContact.rejected]: (_, { payload }) => payload,
+//   [deleteContactById.pending]: () => null,
+//   [deleteContactById.rejected]: (_, { payload }) => payload,
+//   [editContactById.pending]: () => null,
+//   [editContactById.rejected]: (_, { payload }) => payload,
+// });
 
-const contacts = combineReducers({
-  items: itemsReducer,
-  filter: filterReducer,
-});
+// const filterReducer = createReducer('', {
+//   [actions.filterContacts]: (_, { payload }) => payload,
+// });
 
-export default contacts;
+// const items = combineReducers({
+//   entities: contactsReducer,
+//   isLoading,
+//   error,
+// });
+
+// const contacts = combineReducers({
+//   items,
+//   filter: filterReducer,
+// });
+
+// export default contacts;

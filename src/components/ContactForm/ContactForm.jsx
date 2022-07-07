@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { getContacts } from 'redux/contacts/contacts-selectors.js';
-import * as action from '../../redux/contacts/contacts-actions';
 import { Form, Label, Input, Button } from './ContactForm.styled.jsx';
+import { useGetContactsQuery, useAddContactsMutation } from 'redux/contacts/contacts-slice.js';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const contacts = useSelector(getContacts);
-  const dispatch = useDispatch();
+  const [phone, setPhone] = useState('');
+  const { data } = useGetContactsQuery();
+  const [addContact, { isLoading }] = useAddContactsMutation();
 
   const handleChange = evt => {
     const { name, value } = evt.target;
@@ -18,8 +16,8 @@ const ContactForm = () => {
       case 'name':
         setName(value);
         break;
-      case 'number':
-        setNumber(value);
+      case 'phone':
+        setPhone(value);
         break;
 
       default:
@@ -31,20 +29,17 @@ const ContactForm = () => {
     evt.preventDefault();
     checkContactName(name)
       ? Notify.failure(`${name} is already in contacts`)
-      : dispatch(action.addContact(name, number)) && reset();
+      : addContact({ name, number: phone }) && reset();
   };
 
   const checkContactName = name => {
     const normalizedName = name.toLowerCase();
-
-    return contacts.find(
-      contact => contact.name.toLowerCase() === normalizedName
-    );
+    return data?.find(contact => contact.name.toLowerCase() === normalizedName);
   };
 
   const reset = () => {
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   return (
@@ -63,19 +58,21 @@ const ContactForm = () => {
         />
       </Label>
       <Label>
-        Number
+        Phone
         <Input
           type="tel"
-          name="number"
+          name="phone"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          title="Phone phone must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           onChange={handleChange}
-          value={number}
+          value={phone}
           autoComplete="off"
         />
       </Label>
-      <Button type="submit">Add contact</Button>
+      <Button type="submit" disabled={isLoading}>
+        {isLoading ? 'Loading...' : 'Add contact'}
+      </Button>
     </Form>
   );
 };
