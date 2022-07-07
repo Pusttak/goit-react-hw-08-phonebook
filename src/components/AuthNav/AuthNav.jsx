@@ -3,7 +3,7 @@ import { NavList, NavItem } from './AuthNav.styled';
 const AuthNav = () => (
   <NavList>
     <li>
-      <NavItem to="login">Login</NavItem>
+      <NavItem to="login">Log In</NavItem>
     </li>
     <li>
       <NavItem button="true" to="register">

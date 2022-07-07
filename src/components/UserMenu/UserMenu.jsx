@@ -16,7 +16,7 @@ const UserMenu = () => {
     <UserMenuList>
       <Text>Hello, {name}</Text>
       <Button button="true" type="button" onClick={handleClick}>
-        Logout
+        Log Out
       </Button>
     </UserMenuList>
   );
